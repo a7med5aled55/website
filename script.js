@@ -23,7 +23,8 @@ filterBtns.forEach(btn => {
         const filterValue = btn.getAttribute('data-filter');
         productCards.forEach(card => {
             const cardBrand = card.getAttribute('data-brand');
-            if (filterValue === 'all' || filterValue === cardBrand) {
+            const isSale = card.getAttribute('data-sale') === 'true';
+            if (filterValue === 'all' || filterValue === cardBrand || (filterValue === 'sale' && isSale)) {
                 card.style.display = 'block';
                 card.animate([{ opacity: 0, transform: 'scale(0.95)' }, { opacity: 1, transform: 'scale(1)' }], { duration: 400, easing: 'ease-out' });
             } else {
@@ -40,12 +41,41 @@ navLinks.forEach(link => {
         if (!this.classList.contains('empty-link') && !this.classList.contains('social-icon')) {
             navLinks.forEach(l => l.classList.remove('active'));
             this.classList.add('active');
+            
+            const targetFilter = this.getAttribute('data-nav-target');
+            if (targetFilter) {
+                setTimeout(() => {
+                    const targetBtn = document.querySelector(`.filter-btn[data-filter="${targetFilter}"]`);
+                    if(targetBtn) {
+                        targetBtn.click();
+                    } else if (targetFilter === 'sale') {
+                        filterBtns.forEach(b => b.classList.remove('active'));
+                        productCards.forEach(card => {
+                            if (card.getAttribute('data-sale') === 'true') {
+                                card.style.display = 'block';
+                                card.animate([{ opacity: 0, transform: 'scale(0.95)' }, { opacity: 1, transform: 'scale(1)' }], { duration: 400, easing: 'ease-out' });
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        });
+                    }
+                }, 100);
+            }
         } else if (this.classList.contains('empty-link')) {
             e.preventDefault();
             showToast("Feature Coming Soon!");
         }
     });
 });
+
+// Classic Shop Features Button
+const shopClassicBtn = document.getElementById('shop-classic-btn');
+if (shopClassicBtn) {
+    shopClassicBtn.addEventListener('click', function() {
+        const targetBtn = document.querySelector('.filter-btn[data-filter="classic"]');
+        if(targetBtn) targetBtn.click();
+    });
+}
 
 const toast = document.getElementById('toast');
 function showToast(message) {

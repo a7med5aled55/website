@@ -36,11 +36,11 @@
         </button>
         <nav class="nav-container" id="nav-menu">
             <ul>
-                <li><a href="#new-arrivals" class="nav-link">New Arrivals</a></li>
-                <li><a href="#collections" class="nav-link empty-link">Collections</a></li>
-                <li><a href="#classic" class="nav-link">Classic Shoes</a></li>
-                <li><a href="#sale" class="nav-link empty-link">Sale</a></li>
-                <li><a href="#contact" class="nav-link empty-link">Contact</a></li>
+                <li><a href="#collections" class="nav-link" data-nav-target="sneakers">New Arrivals</a></li>
+                <li><a href="#collections" class="nav-link" data-nav-target="all">Collections</a></li>
+                <li><a href="#collections" class="nav-link" data-nav-target="classic">Classic Shoes</a></li>
+                <li><a href="#collections" class="nav-link" data-nav-target="sale">Sale</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
                 <li class="mobile-only"><a href="#" class="nav-link empty-link">Help & Support</a></li>
                 <li class="mobile-only"><a href="#" class="nav-link" id="mobile-orders-link">Orders & Returns</a></li>
                 <li class="mobile-only"><a href="#" class="nav-link" id="country-link-mobile">Egypt / EN</a></li>
@@ -93,8 +93,8 @@
 
             <div class="product-grid">
                 <!-- Card 1 -->
-                <div class="product-card reveal" data-brand="sneakers">
-                    <div class="badge badge-limited">Limited Edition</div>
+                <div class="product-card reveal" data-brand="sneakers" data-sale="true">
+                    <div class="badge badge-limited" style="background: red;">Sale -15%</div>
                     <div class="product-image-wrapper">
                         <img src="sneaker_nike.png" alt="Nike Neon">
                         <button class="quick-view-btn">Quick View</button>
@@ -102,13 +102,13 @@
                     <div class="product-info">
                         <p class="brand">Nike</p>
                         <h3>Neon X Genesis</h3>
-                        <p class="price">$250</p>
+                        <p class="price"><del style="color:var(--text-muted); font-size:0.8em; margin-right:5px;">$295</del>$250</p>
                     </div>
                 </div>
 
                 <!-- Card 2 -->
-                <div class="product-card reveal" data-brand="sneakers">
-                    <div class="badge badge-bestseller">Best Seller</div>
+                <div class="product-card reveal" data-brand="sneakers" data-sale="true">
+                    <div class="badge badge-bestseller" style="background: red;">Sale -20%</div>
                     <div class="product-image-wrapper">
                         <img src="sneaker_adidas.png" alt="Adidas Crimson">
                         <button class="quick-view-btn">Quick View</button>
@@ -116,7 +116,7 @@
                     <div class="product-info">
                         <p class="brand">Adidas</p>
                         <h3>Crimson Runner 2.0</h3>
-                        <p class="price">$220</p>
+                        <p class="price"><del style="color:var(--text-muted); font-size:0.8em; margin-right:5px;">$275</del>$220</p>
                     </div>
                 </div>
 
@@ -314,7 +314,7 @@
                 <div class="featured-info">
                     <h3>The Signature Burgundy Oxford</h3>
                     <p>Our flagship rugged oxford crafted from premium seamless leather.</p>
-                    <button class="neon-btn">Shop Featured</button>
+                    <a href="#collections" class="neon-btn" id="shop-classic-btn" data-nav-target="classic" style="text-decoration: none; display: inline-block;">Shop Features</a>
                 </div>
             </div>
 
@@ -371,7 +371,7 @@
         </section>
         
         <!-- Footer -->
-        <footer class="site-footer">
+        <footer class="site-footer" id="contact">
             <div class="footer-content">
                 <div class="footer-brand">
                     <h2>
@@ -398,6 +398,8 @@
                         <li><a href="#">FAQ</a></li>
                         <li><a href="#">Shipping & Returns</a></li>
                         <li><a href="#">Contact Us</a></li>
+                        <li style="margin-top: 10px; color: var(--text-muted);">📞 +201024216378</li>
+                        <li style="color: var(--text-muted);">✉️ aly.egy09@gmail.com</li>
                     </ul>
                 </div>
                 <div class="footer-newsletter">
