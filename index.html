@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MARVELLO | Premium Urban Luxury</title>
+    <title>KOTCHI | Premium Urban Luxury</title>
     <meta name="description" content="Discover minimalist, bold, and urban high-end sneakers.">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&display=swap" rel="stylesheet">
@@ -11,7 +11,7 @@
 <body>
     <header class="glass-header">
         <a href="#" class="logo" id="logo-link">
-            <span class="logo-icon">M</span> MARVELLO
+            <span class="logo-icon">K</span> KOTCHI
         </a>
         <button class="menu-toggle" id="menu-toggle">
             <span></span>
@@ -22,6 +22,7 @@
             <ul>
                 <li><a href="#new-arrivals" class="nav-link">New Arrivals</a></li>
                 <li><a href="#collections" class="nav-link empty-link">Collections</a></li>
+                <li><a href="#classic" class="nav-link">Classic Shoes</a></li>
                 <li><a href="#sale" class="nav-link empty-link">Sale</a></li>
                 <li><a href="#contact" class="nav-link empty-link">Contact</a></li>
             </ul>
@@ -57,6 +58,7 @@
                     <button class="filter-btn" data-filter="nike">Nike</button>
                     <button class="filter-btn" data-filter="adidas">Adidas</button>
                     <button class="filter-btn" data-filter="puma">Puma</button>
+                    <button class="filter-btn" data-filter="classic">Classic Shoes</button>
                 </div>
             </div>
 
@@ -116,12 +118,46 @@
                 </div>
             </div>
         </section>
+
+        <!-- Classic Shoes Section -->
+        <section id="classic" class="products-section classic-section">
+            <div class="section-header reveal">
+                <h2>Classic <span class="highlight">Shoes</span></h2>
+            </div>
+            <div class="product-grid">
+                <!-- Card 1 -->
+                <div class="product-card reveal" data-brand="classic">
+                    <div class="product-image-wrapper">
+                        <img src="sneaker_nike.png" alt="Classic Edition 1">
+                        <button class="quick-view-btn">Quick View</button>
+                    </div>
+                    <div class="product-info">
+                        <p class="brand">Kotchi Heritage</p>
+                        <h3>Classic Low-Top Black</h3>
+                        <p class="price">$350</p>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="product-card reveal" data-brand="classic">
+                    <div class="product-image-wrapper">
+                        <img src="sneaker_adidas.png" alt="Classic Edition 2">
+                        <button class="quick-view-btn">Quick View</button>
+                    </div>
+                    <div class="product-info">
+                        <p class="brand">Kotchi Heritage</p>
+                        <h3>Premium Leather White</h3>
+                        <p class="price">$380</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
         <!-- Footer -->
         <footer class="site-footer">
             <div class="footer-content">
                 <div class="footer-brand">
                     <h2>
-                        <span class="logo-icon-small">M</span> MARVELLO
+                        <span class="logo-icon-small">K</span> KOTCHI
                     </h2>
                     <p>Elevating urban footwear with minimalist design and uncompromising quality.</p>
                     <div class="social-links">
@@ -156,7 +192,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 MARVELLO. All rights reserved.</p>
+                <p>&copy; 2026 KOTCHI. All rights reserved.</p>
             </div>
         </footer>
     </main>
