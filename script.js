@@ -67,7 +67,7 @@ const toast = document.getElementById('toast');
 
 emptyLinks.forEach(link => {
     link.addEventListener('click', function(e) {
-        e.preventDefault(); // Prevent default link behavior
+        e.preventDefault();
         showToast("Feature Coming Soon!");
     });
 });
@@ -80,21 +80,30 @@ function showToast(message) {
     }, 3000);
 }
 
-// Modal Functionality
+// Interactivity Separation: Modal vs Navigation
 const modal = document.getElementById('product-modal');
 const closeBtn = document.querySelector('.close-btn');
+const quickViewBtns = document.querySelectorAll('.quick-view-btn');
 
 const modalImg = document.getElementById('modal-img');
 const modalTitle = document.getElementById('modal-title');
 const modalBrand = document.getElementById('modal-brand');
 const modalPrice = document.getElementById('modal-price');
 
-productCards.forEach(card => {
-    card.addEventListener('click', function() {
-        const imgSrc = this.querySelector('img').src;
-        const title = this.querySelector('h3').textContent;
-        const brand = this.querySelector('.brand').textContent;
-        const price = this.querySelector('.price').textContent;
+const fullDetailsSection = document.getElementById('full-details-section');
+const fullInfoTitle = document.getElementById('full-info-title');
+const fullInfoImg = document.getElementById('full-info-img');
+
+// 1. Quick View Button -> Modal (Stop Propagation)
+quickViewBtns.forEach(btn => {
+    btn.addEventListener('click', function(event) {
+        event.stopPropagation(); // Prevent card click event
+        
+        const card = this.closest('.product-card');
+        const imgSrc = card.querySelector('img').src;
+        const title = card.querySelector('h3').textContent;
+        const brand = card.querySelector('.brand').textContent;
+        const price = card.querySelector('.price').textContent;
 
         modalImg.src = imgSrc;
         modalTitle.textContent = title;
@@ -105,6 +114,46 @@ productCards.forEach(card => {
         setTimeout(() => {
             modal.classList.add('show');
         }, 10);
+    });
+});
+
+// 2. Product Card Click -> Navigation to Full Info
+productCards.forEach(card => {
+    // Dynamically inject the View Details overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'view-details-overlay';
+    overlay.innerHTML = '<span>View Details</span>';
+    card.insertBefore(overlay, card.firstChild);
+
+    card.addEventListener('click', function() {
+        // Simulate Navigation by showing Full Details Section
+        showToast("Navigating to Full Details...");
+        
+        const imgSrc = this.querySelector('img').src;
+        const title = this.querySelector('h3').textContent;
+
+        fullInfoTitle.textContent = title + " - Full Overview";
+        fullInfoImg.src = imgSrc;
+
+        fullDetailsSection.style.display = 'block';
+        
+        // Ensure intersection observer picks it up
+        revealObserver.observe(fullDetailsSection.querySelector('.reveal'));
+        
+        // Scroll to it smoothly
+        setTimeout(() => {
+            fullDetailsSection.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+    });
+});
+
+// Size Selection Logic
+const sizeBtns = document.querySelectorAll('.size-btn');
+sizeBtns.forEach(btn => {
+    btn.addEventListener('click', function(event) {
+        event.stopPropagation(); // Prevent modal closure if somehow bubbling
+        sizeBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
     });
 });
 
@@ -120,5 +169,5 @@ function closeModal() {
     modal.classList.remove('show');
     setTimeout(() => {
         modal.style.display = "none";
-    }, 300); // match css transition time
+    }, 300);
 }
