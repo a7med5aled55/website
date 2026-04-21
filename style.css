@@ -47,6 +47,7 @@ body {
     font-weight: 900;
     letter-spacing: 2px;
     color: var(--text-color);
+    text-decoration: none;
 }
 
 nav.nav-container {
@@ -274,7 +275,7 @@ nav a.active {
     border-radius: 15px;
     padding: 1.5rem;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     transition: transform 0.4s ease, border-color 0.4s ease;
     cursor: pointer;
 }
@@ -315,7 +316,7 @@ nav a.active {
     justify-content: center;
     align-items: center;
     margin-bottom: 1.5rem;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .product-image-wrapper img {
@@ -1262,4 +1263,21 @@ nav a.active {
 .pay-submit-btn {
     width: 100%;
     margin-top: 1rem;
+}
+
+/* Fix Layout Clipping Overrides */
+.products-section, .full-details-section, .hero, main {
+    overflow: visible !important;
+}
+
+.products-section {
+    padding: 8rem 5% 4rem 5%;
+}
+
+.product-image-wrapper, .product-card {
+    overflow: visible !important;
+}
+
+.product-image-wrapper img, .hero-image img, .gallery-main img, .cart-item-img {
+    object-fit: contain !important;
 }

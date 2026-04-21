@@ -318,3 +318,38 @@ document.querySelectorAll('.pay-btn').forEach(btn => {
         }, 300);
     });
 });
+
+// Payment Method Toggle
+const paymentRadios = document.querySelectorAll('input[name="payment_method"]');
+const cardForm = document.getElementById('card-payment-form');
+const confirmOrderBtn = document.getElementById('confirm-order-btn');
+
+if(paymentRadios && cardForm) {
+    paymentRadios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            if(this.value === 'card') {
+                cardForm.style.display = 'block';
+            } else {
+                cardForm.style.display = 'none';
+            }
+        });
+    });
+}
+
+if(confirmOrderBtn) {
+    confirmOrderBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const selectedMethod = document.querySelector('input[name="payment_method"]:checked').value;
+        checkoutModal.classList.remove('show');
+        setTimeout(() => {
+            checkoutModal.style.display = "none";
+            cartState = [];
+            updateCartUI();
+            if(selectedMethod === 'cod') {
+                showToast("Order Confirmed! You will pay on delivery.");
+            } else {
+                showToast("Payment Successful! Thank you.");
+            }
+        }, 300);
+    });
+}

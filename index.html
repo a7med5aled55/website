@@ -10,7 +10,7 @@
 </head>
 <body>
     <header class="glass-header">
-        <div class="logo">KICKS.</div>
+        <a href="#" class="logo" id="logo-link">KICKS.</a>
         <nav class="nav-container">
             <ul>
                 <li><a href="#new-arrivals" class="nav-link">New Arrivals</a></li>
@@ -299,28 +299,32 @@
                             <input type="text" placeholder="Last Name" required>
                         </div>
                         <input type="text" placeholder="Address" required>
-                        <div class="form-row">
-                            <input type="text" placeholder="City" required>
-                            <input type="text" placeholder="Postal Code" required>
-                        </div>
+                        <input type="text" placeholder="City" required>
                     </form>
                     
                     <h3 class="payment-title">Payment Method</h3>
-                    <div class="payment-options">
-                        <button class="pay-btn apple-pay"><span class="icon"></span> Pay</button>
-                        <button class="pay-btn google-pay"><span class="icon">G</span> Pay</button>
+                    <div class="payment-methods-radio">
+                        <label class="radio-option">
+                            <input type="radio" name="payment_method" value="card" checked>
+                            <span class="radio-custom"></span>
+                            <span class="icon">💳</span> Credit/Debit Card
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="payment_method" value="cod">
+                            <span class="radio-custom"></span>
+                            <span class="icon">🚚</span> Cash on Delivery (COD)
+                        </label>
                     </div>
                     
-                    <div class="divider"><span>OR</span></div>
-                    
-                    <form class="payment-form">
+                    <form class="payment-form" id="card-payment-form">
                         <input type="text" placeholder="Card Number" required>
                         <div class="form-row">
                             <input type="text" placeholder="MM/YY" required>
                             <input type="text" placeholder="CVC" required>
                         </div>
-                        <button type="submit" class="neon-btn pay-submit-btn">Pay <span id="checkout-final-price">$0.00</span></button>
                     </form>
+
+                    <button type="button" class="neon-btn pay-submit-btn" id="confirm-order-btn">Confirm Order - <span id="checkout-final-price">$0.00</span></button>
                 </div>
             </div>
         </div>
