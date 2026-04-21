@@ -152,22 +152,7 @@ nav a.active {
 }
 
 /* Responsive */
-@media (max-width: 968px) {
-    .hero { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 10rem 5% 5rem 5%; position: relative; overflow: visible !important; gap: 2rem; }
-    .hero-content h1 {
-        font-size: 3.5rem;
-    }
-    nav ul {
-        display: none; /* Mobile menu hidden for now */
-    }
-    .hero-image-container {
-        margin-top: 3rem;
-    }
-    .hero::before {
-        right: 50%;
-        transform: translate(50%, -50%);
-    }
-}
+
 
 /* Products Section */
 .products-section {
@@ -481,11 +466,7 @@ nav a.active {
     bottom: 50px;
 }
 
-@media (max-width: 768px) {
-    .modal-body {
-        flex-direction: column;
-    }
-}
+
 
 /* View Details Overlay */
 .view-details-overlay {
@@ -809,11 +790,7 @@ nav a.active {
     transition: all 0.8s cubic-bezier(0.2, 1, 0.3, 1);
 }
 
-@media (max-width: 968px) {
-    .product-pdp-layout {
-        flex-direction: column;
-    }
-}
+
 
 /* Footer */
 .site-footer {
@@ -931,11 +908,7 @@ nav a.active {
     font-size: 0.9rem;
 }
 
-@media (max-width: 968px) {
-    .footer-content {
-        grid-template-columns: 1fr;
-    }
-}
+
 
 /* Cart Drawer */
 .cart-overlay {
@@ -1240,61 +1213,7 @@ nav a.active {
     transition: 0.3s;
 }
 
-@media (max-width: 968px) {
-    .menu-toggle {
-        display: flex;
-    }
-    
-    .nav-container {
-        position: fixed;
-        top: 0;
-        right: -100%;
-        width: 100%;
-        height: 100vh;
-        background: #050505;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        transition: right 0.4s ease;
-        border-left: 1px solid #333;
-        z-index: 1000;
-    }
 
-    .nav-container.active {
-        right: 0;
-    }
-
-    .nav-container ul {
-        flex-direction: column;
-        align-items: center;
-        gap: 2rem;
-    }
-    
-    .hero {
-        flex-direction: column;
-        text-align: center;
-        padding-top: 150px;
-    }
-    
-    .hero-content {
-        align-items: center !important;
-    }
-    
-    .hero-content h1 {
-        font-size: 13vw !important;
-    }
-    
-    .hero-image {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-    }
-    
-    .hero-image img {
-        width: 90%;
-        max-width: 400px;
-    }
-}
 
 /* KOTCHI Rebranding Overrides */
 :root {
@@ -1362,15 +1281,7 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 0 !important;
 }
 
-@media (max-width: 968px) {
-    .logo {
-        font-size: 1.5rem !important;
-    }
-    .logo-icon {
-        font-size: 1.2rem;
-        padding: 0.1rem 0.3rem;
-    }
-}
+
 
 /* Final KOTCHI Global UX & Layout Polish */
 * {
@@ -1399,15 +1310,7 @@ img {
     overflow: visible !important;
 }
 
-@media (max-width: 968px) {
-    .logo {
-        max-width: 65vw; /* Prevent overlap with hamburger */
-        white-space: nowrap;
-    }
-    .hero-content {
-        padding-top: 2rem;
-    }
-}
+
 
 /* Classic Section Enhancements */
 .section-description {
@@ -1461,13 +1364,7 @@ img {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
-@media (max-width: 968px) {
-    .classic-featured {
-        flex-direction: column;
-        text-align: center;
-        padding: 2rem;
-    }
-}
+
 
 /* Top Bar Styles */
 .top-bar {
@@ -1579,22 +1476,7 @@ img {
     opacity: 1;
 }
 
-@media (max-width: 968px) {
-    .top-bar {
-        display: none;
-    }
-    .glass-header {
-        top: 0;
-    }
-    .mobile-only {
-        display: block;
-        margin-top: 1rem;
-    }
-    .mobile-only a {
-        font-size: 1.2rem !important;
-        opacity: 0.8;
-    }
-}
+
 
 /* Zero-Scroll Hero Optimization */
 .hero {
@@ -1640,44 +1522,7 @@ img {
     z-index: 10;
 }
 
-@media (max-width: 968px) {
-    .hero {
-        padding: calc(80px + 2vh) 5% 2vh 5% !important;
-        flex-direction: column !important;
-        justify-content: center !important;
-        gap: 3vh !important;
-    }
-    
-    .hero-content {
-        align-items: center;
-        text-align: center;
-        flex: 0 1 auto;
-    }
 
-    .hero-content h1 {
-        font-size: clamp(2.2rem, 8vw, 3rem) !important;
-        margin-bottom: 1vh;
-    }
-    
-    .hero-content p {
-        margin-bottom: 2vh;
-        font-size: 0.9rem;
-    }
-    
-    .floating-sneaker {
-        max-height: 48vh !important; /* Upscaled for mobile */
-        max-width: 90vw !important;
-        flex: 0 1 auto;
-    }
-    
-    .logo {
-        font-size: 1.2rem !important; /* Keep logo smaller on mobile for more hero space */
-    }
-    .logo-icon {
-        font-size: 1rem !important;
-        padding: 0.1rem 0.2rem;
-    }
-}
 
 /* RTL / Arabic Language Support */
 html.rtl-mode {
@@ -1698,11 +1543,7 @@ html.rtl-mode .hero-content {
     align-items: flex-start;
 }
 
-@media (max-width: 968px) {
-    html.rtl-mode .hero-content {
-        align-items: center;
-    }
-}
+
 
 /* Product Card Advanced Hover Interactions */
 .product-card {
@@ -1763,12 +1604,6 @@ html.rtl-mode .hero-content {
     color: var(--accent-color);
 }
 
-@media (max-width: 968px) {
-    .mobile-bottom-nav {
-        display: flex;
-    }
-    body {
-        padding-bottom: 70px; /* Space for bottom nav */
-    }
-}
+
+
 
