@@ -13,10 +13,10 @@
         <div class="logo">KICKS.</div>
         <nav>
             <ul>
-                <li><a href="#new-arrivals">New Arrivals</a></li>
-                <li><a href="#collections">Collections</a></li>
-                <li><a href="#sale">Sale</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#new-arrivals" class="nav-link">New Arrivals</a></li>
+                <li><a href="#collections" class="nav-link empty-link">Collections</a></li>
+                <li><a href="#sale" class="nav-link empty-link">Sale</a></li>
+                <li><a href="#contact" class="nav-link empty-link">Contact</a></li>
             </ul>
         </nav>
     </header>
@@ -32,6 +32,99 @@
                 <img src="hero_sneaker.png" alt="Premium Electric Orange Sneaker" class="floating-sneaker">
             </div>
         </section>
+
+        <!-- Product Grid Section -->
+        <section id="new-arrivals" class="products-section">
+            <div class="section-header reveal">
+                <h2>New <span class="highlight">Arrivals</span></h2>
+                <div class="filter-bar">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="nike">Nike</button>
+                    <button class="filter-btn" data-filter="adidas">Adidas</button>
+                    <button class="filter-btn" data-filter="puma">Puma</button>
+                </div>
+            </div>
+
+            <div class="product-grid">
+                <!-- Card 1 -->
+                <div class="product-card reveal" data-brand="nike">
+                    <div class="badge badge-limited">Limited Edition</div>
+                    <div class="product-image-wrapper">
+                        <img src="sneaker_nike.png" alt="Nike Neon">
+                        <button class="quick-view-btn">Quick View</button>
+                    </div>
+                    <div class="product-info">
+                        <p class="brand">Nike</p>
+                        <h3>Neon X Genesis</h3>
+                        <p class="price">$250</p>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="product-card reveal" data-brand="adidas">
+                    <div class="badge badge-bestseller">Best Seller</div>
+                    <div class="product-image-wrapper">
+                        <img src="sneaker_adidas.png" alt="Adidas Crimson">
+                        <button class="quick-view-btn">Quick View</button>
+                    </div>
+                    <div class="product-info">
+                        <p class="brand">Adidas</p>
+                        <h3>Crimson Runner 2.0</h3>
+                        <p class="price">$220</p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="product-card reveal" data-brand="puma">
+                    <div class="product-image-wrapper">
+                        <img src="sneaker_puma.png" alt="Puma Ice">
+                        <button class="quick-view-btn">Quick View</button>
+                    </div>
+                    <div class="product-info">
+                        <p class="brand">Puma</p>
+                        <h3>Ice Drift</h3>
+                        <p class="price">$180</p>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="product-card reveal" data-brand="nike">
+                    <div class="product-image-wrapper">
+                        <img src="hero_sneaker.png" alt="Kicks Signature">
+                        <button class="quick-view-btn">Quick View</button>
+                    </div>
+                    <div class="product-info">
+                        <p class="brand">Nike</p>
+                        <h3>Electric Orange Pro</h3>
+                        <p class="price">$290</p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
+
+    <!-- Product Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img id="modal-img" src="" alt="Product Image">
+                </div>
+                <div class="modal-details">
+                    <h3 id="modal-title">Product Title</h3>
+                    <p id="modal-brand" class="brand">Brand</p>
+                    <p id="modal-price" class="price">$0</p>
+                    <p class="modal-desc">This is a premium high-end sneaker crafted with cutting-edge materials and a sleek minimalist design. Limited stock available.</p>
+                    <button class="neon-btn add-to-cart-btn">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Coming Soon!</div>
+
+    <script src="script.js"></script>
 </body>
 </html>
