@@ -1,0 +1,200 @@
+:root {
+    --bg-color: #121212; /* Charcoal Black */
+    --text-color: #f5f5f5;
+    --accent-color: #ff6b00; /* Electric Orange */
+    --glass-bg: rgba(18, 18, 18, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Outfit', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    overflow-x: hidden;
+    min-height: 100vh;
+    line-height: 1.5;
+}
+
+/* Glassmorphism Header */
+.glass-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 5%;
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: var(--text-color);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    gap: 2.5rem;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--text-color);
+    font-size: 1rem;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+nav a:hover {
+    color: var(--accent-color);
+}
+
+/* Hero Section */
+.hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100vh;
+    padding: 8rem 5% 4rem 5%;
+    position: relative;
+    overflow: visible;
+}
+
+/* Background Glow */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 15%;
+    transform: translateY(-50%);
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255, 107, 0, 0.15) 0%, rgba(18, 18, 18, 0) 70%);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+.hero-content {
+    flex: 1;
+    z-index: 2;
+    max-width: 600px;
+    padding-top: 2rem;
+    padding-left: 2rem;
+}
+
+.hero-content h1 {
+    font-size: 5rem;
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+}
+
+.highlight {
+    color: var(--accent-color);
+}
+
+.hero-content p {
+    font-size: 0.9rem;
+    font-weight: 300;
+    margin-top: 1.5rem;
+    margin-bottom: 2.5rem;
+    opacity: 0.8;
+    letter-spacing: 0.5px;
+}
+
+/* Neon Glow Button */
+.neon-btn {
+    padding: 1rem 3rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-color);
+    background: transparent;
+    border: 2px solid var(--accent-color);
+    border-radius: 50px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 1px;
+}
+
+.neon-btn:hover {
+    background: var(--accent-color);
+    color: var(--bg-color);
+    box-shadow: 0 0 15px var(--accent-color),
+                0 0 30px var(--accent-color),
+                0 0 60px var(--accent-color);
+    text-shadow: none;
+}
+
+.hero-image-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2;
+    position: relative;
+    padding: 2rem;
+}
+
+.floating-sneaker {
+    width: 100%;
+    max-width: 750px;
+    object-fit: contain;
+    animation: float 6s ease-in-out infinite;
+    filter: drop-shadow(0 25px 25px rgba(0, 0, 0, 0.5));
+}
+
+/* Floating Animation */
+@keyframes float {
+    0% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(2deg);
+    }
+    100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+}
+
+/* Responsive */
+@media (max-width: 968px) {
+    .hero {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        padding-top: 120px;
+    }
+    .hero-content h1 {
+        font-size: 3.5rem;
+    }
+    nav ul {
+        display: none; /* Mobile menu hidden for now */
+    }
+    .hero-image-container {
+        margin-top: 3rem;
+    }
+    .hero::before {
+        right: 50%;
+        transform: translate(50%, -50%);
+    }
+}
