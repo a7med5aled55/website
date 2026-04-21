@@ -1296,3 +1296,79 @@ nav a.active {
     }
 }
 
+/* MARVELLO Rebranding Overrides */
+:root {
+    --bg-color: #000000;
+    --text-color: #ffffff;
+    --accent-color: #ffffff;
+    --glass-bg: rgba(0, 0, 0, 0.6);
+    --glass-border: #8E8E8E;
+}
+
+body {
+    background-color: var(--bg-color) !important;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    letter-spacing: 2px;
+}
+
+/* Logo Stylized M */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo-icon, .logo-icon-small {
+    font-weight: 900;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid var(--text-color);
+    padding: 0.1rem 0.5rem;
+    font-family: 'Outfit', sans-serif;
+    line-height: 1;
+}
+
+.logo-icon {
+    font-size: 1.5rem;
+}
+
+.logo-icon-small {
+    font-size: 1.2rem;
+    border-width: 1px;
+}
+
+/* Consistent Sharp Borders */
+.product-card, .neon-btn, .cart-drawer, .checkout-content, input, .radio-option, .cart-item-img, .cart-item, .qty-btn, .pay-btn {
+    border-radius: 0 !important;
+}
+
+.product-card {
+    border-color: var(--glass-border);
+    background: #000000 !important;
+}
+
+.product-card:hover {
+    border-color: #ffffff;
+}
+
+.cart-item {
+    border-color: var(--glass-border) !important;
+}
+
+.badge {
+    border-radius: 0 !important;
+}
+
+@media (max-width: 968px) {
+    .logo {
+        font-size: 1.5rem !important;
+    }
+    .logo-icon {
+        font-size: 1.2rem;
+        padding: 0.1rem 0.3rem;
+    }
+}
+
