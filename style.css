@@ -1625,14 +1625,19 @@ img {
 .hero-image-container {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     height: 100%;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    margin-top: 4vh; /* Aligns top edge of sneaker with text */
+    overflow: visible !important;
 }
 
 .floating-sneaker {
     max-height: 75vh !important; /* Significantly upscale image to fill vertical space */
     width: auto !important;
-    object-fit: contain;
+    object-fit: contain !important;
+    z-index: 10;
 }
 
 @media (max-width: 968px) {
