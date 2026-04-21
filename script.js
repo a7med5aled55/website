@@ -159,7 +159,8 @@ cartNavIcon.addEventListener('click', openCart);
 closeCartBtn.addEventListener('click', closeCart);
 cartOverlay.addEventListener('click', closeCart);
 
-function openCart() {
+function openCart(e) {
+    if(e) e.preventDefault();
     cartOverlay.classList.add('show');
     cartDrawer.classList.add('open');
 }
@@ -375,8 +376,14 @@ const loginModal = document.getElementById('login-modal');
 const ordersModal = document.getElementById('orders-modal');
 
 // Trigger Buttons
-const loginTriggers = [document.getElementById('login-link'), document.getElementById('login-icon-link')];
+const loginTriggers = [document.getElementById('login-link'), document.getElementById('login-icon-link'), document.getElementById('mobile-bottom-account')];
 const ordersTriggers = [document.getElementById('orders-link'), document.getElementById('mobile-orders-link')];
+
+// Mobile Cart Trigger
+const mobileCartBtn = document.getElementById('mobile-bottom-cart');
+if (mobileCartBtn) {
+    mobileCartBtn.addEventListener('click', openCart);
+}
 
 // Close Buttons
 const loginCloseBtn = document.querySelector('.login-close-btn');
@@ -524,9 +531,24 @@ langSwitchers.forEach(btn => {
             }
         });
         
+        
+        // Update language switcher text and country link
+        const langToggleDesktop = document.getElementById('lang-toggle-desktop');
+        const langToggleMobile = document.getElementById('lang-toggle-mobile');
+        const countryLinkDesktop = document.getElementById('country-link-desktop');
+        const countryLinkMobile = document.getElementById('country-link-mobile');
+        
         if (isRTL) {
+            if (langToggleDesktop) langToggleDesktop.textContent = "English";
+            if (langToggleMobile) langToggleMobile.textContent = "Language: English";
+            if (countryLinkDesktop) countryLinkDesktop.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> مصر / AR';
+            if (countryLinkMobile) countryLinkMobile.textContent = "مصر / AR";
             showToast("تم تغيير اللغة إلى العربية");
         } else {
+            if (langToggleDesktop) langToggleDesktop.textContent = "العربية";
+            if (langToggleMobile) langToggleMobile.textContent = "Language: العربية";
+            if (countryLinkDesktop) countryLinkDesktop.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Egypt / EN';
+            if (countryLinkMobile) countryLinkMobile.textContent = "Egypt / EN";
             showToast("Language changed to English");
         }
     });
