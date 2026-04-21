@@ -15,8 +15,11 @@
                 <a href="#" class="top-link empty-link"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Help & Support</a>
                 <a href="#" class="top-link" id="orders-link"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg> Orders & Returns</a>
             </div>
-            <div class="top-bar-right">
-                <a href="#" class="top-link lang-switcher" id="lang-toggle-desktop">EN | AR</a>
+            <div class="top-bar-right" style="display: flex; align-items: center; gap: 5px;">
+                <a href="#" class="top-link lang-btn-ar">عربي</a>
+                <span style="color:var(--text-muted); font-size: 0.8rem;">|</span>
+                <a href="#" class="top-link lang-btn-en">English</a>
+                <span style="margin: 0 10px;"></span>
                 <a href="#" class="top-link" id="country-link-desktop"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Egypt / EN</a>
             </div>
         </div>
@@ -41,7 +44,11 @@
                 <li class="mobile-only"><a href="#" class="nav-link empty-link">Help & Support</a></li>
                 <li class="mobile-only"><a href="#" class="nav-link" id="mobile-orders-link">Orders & Returns</a></li>
                 <li class="mobile-only"><a href="#" class="nav-link" id="country-link-mobile">Egypt / EN</a></li>
-                <li class="mobile-only"><a href="#" class="nav-link lang-switcher" id="lang-toggle-mobile">Language: EN | AR</a></li>
+                <li class="mobile-only" style="display: flex; justify-content: center; align-items: center; gap: 10px; padding: 1rem;">
+                    <a href="#" class="lang-btn-ar" style="color: var(--text-color); text-decoration: none;">عربي</a>
+                    <span style="color:var(--text-muted);">|</span>
+                    <a href="#" class="lang-btn-en" style="color: var(--text-color); text-decoration: none;">English</a>
+                </li>
             </ul>
             <div class="header-icons">
                 <a href="#" class="icon-link" id="login-icon-link">

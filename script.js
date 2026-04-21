@@ -481,75 +481,74 @@ const translations = {
 const originalTexts = new Map();
 
 // Language Switcher Logic
-const langSwitchers = document.querySelectorAll('.lang-switcher');
-langSwitchers.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const isRTL = !document.documentElement.classList.contains('rtl-mode');
-        document.documentElement.classList.toggle('rtl-mode', isRTL);
-        
-        // Toggle text logic
-        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
-        let node;
-        while (node = walker.nextNode()) {
-            const text = node.nodeValue.trim();
-            if (text.length > 0) {
-                if (isRTL) {
-                    if (translations[text]) {
-                        if (!originalTexts.has(node)) originalTexts.set(node, text);
-                        node.nodeValue = node.nodeValue.replace(text, translations[text]);
-                    }
-                } else {
-                    if (originalTexts.has(node)) {
-                        node.nodeValue = node.nodeValue.replace(node.nodeValue.trim(), originalTexts.get(node));
-                    }
+function switchLanguage(targetLang) {
+    const isCurrentlyRTL = document.documentElement.classList.contains('rtl-mode');
+    if ((targetLang === 'ar' && isCurrentlyRTL) || (targetLang === 'en' && !isCurrentlyRTL)) return;
+    
+    const isRTL = (targetLang === 'ar');
+    document.documentElement.classList.toggle('rtl-mode', isRTL);
+    
+    // Toggle text logic
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+    let node;
+    while (node = walker.nextNode()) {
+        const text = node.nodeValue.trim();
+        if (text.length > 0) {
+            if (isRTL) {
+                if (translations[text]) {
+                    if (!originalTexts.has(node)) originalTexts.set(node, text);
+                    node.nodeValue = node.nodeValue.replace(text, translations[text]);
+                }
+            } else {
+                if (originalTexts.has(node)) {
+                    node.nodeValue = node.nodeValue.replace(node.nodeValue.trim(), originalTexts.get(node));
                 }
             }
         }
-        
-        // Translate placeholders
-        const inputs = document.querySelectorAll('input');
-        inputs.forEach(input => {
-            const placeholder = input.getAttribute('placeholder');
-            if (placeholder) {
-                if (isRTL) {
-                    // Quick add some placeholders
-                    const phTrans = {
-                        "Email Address": "البريد الإلكتروني",
-                        "Password": "كلمة المرور",
-                        "Enter your email": "أدخل بريدك الإلكتروني"
-                    };
-                    if (phTrans[placeholder]) {
-                        if (!originalTexts.has(input)) originalTexts.set(input, placeholder);
-                        input.setAttribute('placeholder', phTrans[placeholder]);
-                    }
-                } else {
-                    if (originalTexts.has(input)) {
-                        input.setAttribute('placeholder', originalTexts.get(input));
-                    }
+    }
+    
+    // Translate placeholders
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+        const placeholder = input.getAttribute('placeholder');
+        if (placeholder) {
+            if (isRTL) {
+                const phTrans = {
+                    "Email Address": "البريد الإلكتروني",
+                    "Password": "كلمة المرور",
+                    "Enter your email": "أدخل بريدك الإلكتروني"
+                };
+                if (phTrans[placeholder]) {
+                    if (!originalTexts.has(input)) originalTexts.set(input, placeholder);
+                    input.setAttribute('placeholder', phTrans[placeholder]);
+                }
+            } else {
+                if (originalTexts.has(input)) {
+                    input.setAttribute('placeholder', originalTexts.get(input));
                 }
             }
-        });
-        
-        
-        // Update language switcher text and country link
-        const langToggleDesktop = document.getElementById('lang-toggle-desktop');
-        const langToggleMobile = document.getElementById('lang-toggle-mobile');
-        const countryLinkDesktop = document.getElementById('country-link-desktop');
-        const countryLinkMobile = document.getElementById('country-link-mobile');
-        
-        if (isRTL) {
-            if (langToggleDesktop) langToggleDesktop.textContent = "English";
-            if (langToggleMobile) langToggleMobile.textContent = "Language: English";
-            if (countryLinkDesktop) countryLinkDesktop.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> مصر / AR';
-            if (countryLinkMobile) countryLinkMobile.textContent = "مصر / AR";
-            showToast("تم تغيير اللغة إلى العربية");
-        } else {
-            if (langToggleDesktop) langToggleDesktop.textContent = "العربية";
-            if (langToggleMobile) langToggleMobile.textContent = "Language: العربية";
-            if (countryLinkDesktop) countryLinkDesktop.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Egypt / EN';
-            if (countryLinkMobile) countryLinkMobile.textContent = "Egypt / EN";
-            showToast("Language changed to English");
         }
     });
+    
+    // Update country link
+    const countryLinkDesktop = document.getElementById('country-link-desktop');
+    const countryLinkMobile = document.getElementById('country-link-mobile');
+    
+    if (isRTL) {
+        if (countryLinkDesktop) countryLinkDesktop.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> مصر / عربي';
+        if (countryLinkMobile) countryLinkMobile.textContent = "مصر / عربي";
+        showToast("تم تغيير اللغة إلى العربية");
+    } else {
+        if (countryLinkDesktop) countryLinkDesktop.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg> Egypt / EN';
+        if (countryLinkMobile) countryLinkMobile.textContent = "Egypt / EN";
+        showToast("Language changed to English");
+    }
+}
+
+document.querySelectorAll('.lang-btn-ar').forEach(btn => {
+    btn.addEventListener('click', (e) => { e.preventDefault(); switchLanguage('ar'); });
+});
+
+document.querySelectorAll('.lang-btn-en').forEach(btn => {
+    btn.addEventListener('click', (e) => { e.preventDefault(); switchLanguage('en'); });
 });
