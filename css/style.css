@@ -34,7 +34,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 5%;
+    padding: 1.2rem 5%;
     background: var(--glass-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -178,7 +178,9 @@ nav a.active {
 
 .filter-bar {
     display: flex;
-    gap: 1rem;
+    gap: 0.8rem;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .filter-btn {
@@ -199,6 +201,32 @@ nav a.active {
     background: var(--accent-color);
     border-color: var(--accent-color);
     color: var(--bg-color);
+}
+
+/* Sale Filter — Highlighted */
+.filter-btn-sale {
+    border-color: #e53935;
+    color: #e53935;
+    font-weight: 700;
+}
+
+.filter-btn-sale:hover, .filter-btn-sale.active {
+    background: #e53935;
+    border-color: #e53935;
+    color: #fff;
+}
+
+/* New Arrivals highlight */
+.filter-btn[data-highlight="new"] {
+    border-color: #4caf50;
+    color: #4caf50;
+    font-weight: 700;
+}
+
+.filter-btn[data-highlight="new"]:hover, .filter-btn[data-highlight="new"].active {
+    background: #4caf50;
+    border-color: #4caf50;
+    color: #fff;
 }
 
 /* Product Grid */
@@ -1527,7 +1555,28 @@ img {
 /* RTL / Arabic Language Support */
 html.rtl-mode {
     direction: rtl;
-    font-family: 'IBM Plex Sans Arabic', sans-serif;
+}
+
+/* Facebook-Style Arabic Typography Override */
+html.rtl-mode, 
+html.rtl-mode body,
+html.rtl-mode .nav-link,
+html.rtl-mode .neon-btn,
+html.rtl-mode .top-link,
+html.rtl-mode h1, html.rtl-mode h2, html.rtl-mode h3, html.rtl-mode h4, html.rtl-mode h5, html.rtl-mode h6,
+html.rtl-mode p, html.rtl-mode span, html.rtl-mode a, html.rtl-mode button, html.rtl-mode input, html.rtl-mode .brand {
+    font-family: 'IBM Plex Sans Arabic', 'Helvetica Neue Arabic', sans-serif !important;
+}
+
+/* Headings: Remove letter spacing for Arabic text */
+html.rtl-mode h1, html.rtl-mode h2, html.rtl-mode h3, html.rtl-mode h4, html.rtl-mode h5, html.rtl-mode h6 {
+    letter-spacing: 0 !important;
+    font-weight: 700;
+}
+
+/* Descriptions: Maximize readability */
+html.rtl-mode p, html.rtl-mode .hero-content p, html.rtl-mode .section-description, html.rtl-mode .featured-info p {
+    line-height: 1.6 !important;
 }
 
 html.rtl-mode body {

@@ -12,16 +12,20 @@ const revealObserver = new IntersectionObserver((entries, observer) => {
 
 revealElements.forEach(el => revealObserver.observe(el));
 
-// Product Filtering
+// Product Filtering (uses event delegation for dynamic cards)
 const filterBtns = document.querySelectorAll('.filter-btn');
-const productCards = document.querySelectorAll('.product-card');
+
+function getProductCards() {
+    return document.querySelectorAll('.product-card');
+}
 
 filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
         filterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         const filterValue = btn.getAttribute('data-filter');
-        productCards.forEach(card => {
+        const cards = getProductCards();
+        cards.forEach(card => {
             const cardBrand = card.getAttribute('data-brand');
             const isSale = card.getAttribute('data-sale') === 'true';
             if (filterValue === 'all' || filterValue === cardBrand || (filterValue === 'sale' && isSale)) {
@@ -31,40 +35,6 @@ filterBtns.forEach(btn => {
                 card.style.display = 'none';
             }
         });
-    });
-});
-
-// Navigation & Toasts
-const navLinks = document.querySelectorAll('.nav-link');
-navLinks.forEach(link => {
-    link.addEventListener('click', function(e) {
-        if (!this.classList.contains('empty-link') && !this.classList.contains('social-icon')) {
-            navLinks.forEach(l => l.classList.remove('active'));
-            this.classList.add('active');
-            
-            const targetFilter = this.getAttribute('data-nav-target');
-            if (targetFilter) {
-                setTimeout(() => {
-                    const targetBtn = document.querySelector(`.filter-btn[data-filter="${targetFilter}"]`);
-                    if(targetBtn) {
-                        targetBtn.click();
-                    } else if (targetFilter === 'sale') {
-                        filterBtns.forEach(b => b.classList.remove('active'));
-                        productCards.forEach(card => {
-                            if (card.getAttribute('data-sale') === 'true') {
-                                card.style.display = 'block';
-                                card.animate([{ opacity: 0, transform: 'scale(0.95)' }, { opacity: 1, transform: 'scale(1)' }], { duration: 400, easing: 'ease-out' });
-                            } else {
-                                card.style.display = 'none';
-                            }
-                        });
-                    }
-                }, 100);
-            }
-        } else if (this.classList.contains('empty-link')) {
-            e.preventDefault();
-            showToast("Feature Coming Soon!");
-        }
     });
 });
 
@@ -111,7 +81,7 @@ const fullInfoTitle = document.getElementById('full-info-title');
 const fullInfoImg = document.getElementById('full-info-img');
 const fullInfoPrice = document.getElementById('full-info-price');
 
-productCards.forEach(card => {
+getProductCards().forEach(card => {
     const overlay = document.createElement('div');
     overlay.className = 'view-details-overlay';
     overlay.innerHTML = '<span>View Details</span>';
@@ -385,21 +355,9 @@ if(confirmOrderBtn) {
     });
 }
 
-// Hamburger Menu Toggle
-const menuToggle = document.getElementById('menu-toggle');
-const navMenu = document.getElementById('nav-menu');
-
-if(menuToggle && navMenu) {
-    menuToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('active');
-    });
-    
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', () => {
-            navMenu.classList.remove('active');
-        });
-    });
-}
+// Hamburger Menu Toggle (disabled — header simplified)
+// const menuToggle = document.getElementById('menu-toggle');
+// const navMenu = document.getElementById('nav-menu');
 
 // User Services Modals
 const loginModal = document.getElementById('login-modal');
