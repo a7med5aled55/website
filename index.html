@@ -11,13 +11,21 @@
 <body>
     <header class="glass-header">
         <div class="logo">KICKS.</div>
-        <nav>
+        <nav class="nav-container">
             <ul>
                 <li><a href="#new-arrivals" class="nav-link">New Arrivals</a></li>
                 <li><a href="#collections" class="nav-link empty-link">Collections</a></li>
                 <li><a href="#sale" class="nav-link empty-link">Sale</a></li>
                 <li><a href="#contact" class="nav-link empty-link">Contact</a></li>
             </ul>
+            <div class="cart-icon-wrapper" id="cart-nav-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                <span class="cart-badge" id="cart-badge">0</span>
+            </div>
         </nav>
     </header>
 
@@ -101,23 +109,128 @@
                 </div>
             </div>
         </section>
+        <!-- Footer -->
+        <footer class="site-footer">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h2>KICKS.</h2>
+                    <p>Elevating urban footwear with minimalist design and uncompromising quality.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-icon">IG</a>
+                        <a href="#" class="social-icon">X</a>
+                        <a href="#" class="social-icon">FB</a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Shop</h3>
+                    <ul>
+                        <li><a href="#">New Arrivals</a></li>
+                        <li><a href="#">Best Sellers</a></li>
+                        <li><a href="#">Release Dates</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-newsletter">
+                    <h3>Stay in the Loop</h3>
+                    <p>Subscribe for exclusive drops and early access.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Enter your email" required>
+                        <button type="submit" class="neon-btn small-btn">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 KICKS. All rights reserved.</p>
+            </div>
+        </footer>
     </main>
 
     <!-- Full Details Section -->
     <section id="full-details-section" class="full-details-section">
         <div class="full-details-content reveal">
             <h2 id="full-info-title">Product Name</h2>
-            <div class="full-info-grid">
-                <img id="full-info-img" src="" alt="Full Product Image">
-                <div class="full-info-text">
-                    <h3>Comprehensive Overview</h3>
-                    <p>Designed for the urban explorer, this sneaker integrates state-of-the-art materials with a bold, minimalist aesthetic. Experience unparalleled comfort, dynamic responsiveness, and a style that commands attention.</p>
-                    <ul class="specs-list">
-                        <li><strong>Material:</strong> Premium breathable mesh & synthetic overlays</li>
-                        <li><strong>Sole:</strong> High-traction rubber outsole</li>
-                        <li><strong>Fit:</strong> True to size, snug lockdown</li>
-                    </ul>
-                    <button class="neon-btn">Buy Now</button>
+            <div class="product-pdp-layout">
+                
+                <!-- Left: Image Gallery -->
+                <div class="pdp-gallery">
+                    <div class="gallery-main">
+                        <img id="full-info-img" src="" alt="Main Product Image">
+                    </div>
+                    <div class="gallery-thumbnails">
+                        <img class="thumb active" src="hero_sneaker.png" alt="Thumb 1">
+                        <img class="thumb" src="sneaker_nike.png" alt="Thumb 2">
+                        <img class="thumb" src="sneaker_adidas.png" alt="Thumb 3">
+                        <img class="thumb" src="sneaker_puma.png" alt="Thumb 4">
+                    </div>
+                </div>
+
+                <!-- Right: Details, Selection, Accordion -->
+                <div class="pdp-info">
+                    <h3 class="pdp-price" id="full-info-price">$250</h3>
+                    <p class="pdp-desc">Designed for the urban explorer, this sneaker integrates state-of-the-art materials with a bold, minimalist aesthetic. Experience unparalleled comfort, dynamic responsiveness, and a style that commands attention.</p>
+                    
+                    <!-- Color Swatches -->
+                    <div class="selection-group">
+                        <span class="selection-label">Select Color:</span>
+                        <div class="color-swatches">
+                            <button class="color-swatch active" style="background: #ff6b00;"></button>
+                            <button class="color-swatch" style="background: #ffffff; border: 1px solid #333;"></button>
+                            <button class="color-swatch" style="background: #00ff88;"></button>
+                            <button class="color-swatch" style="background: #111111; border: 1px solid #444;"></button>
+                        </div>
+                    </div>
+
+                    <!-- Size Selector -->
+                    <div class="selection-group">
+                        <span class="selection-label">Select Size:</span>
+                        <div class="sizes">
+                            <button class="size-btn">8</button>
+                            <button class="size-btn active">9</button>
+                            <button class="size-btn">10</button>
+                            <button class="size-btn">11</button>
+                        </div>
+                    </div>
+
+                    <!-- Add to Cart -->
+                    <div class="cart-action-group">
+                        <button class="neon-btn pdp-add-to-cart" id="pdp-add-to-cart">
+                            <span class="btn-text">Add to Cart</span>
+                        </button>
+                    </div>
+
+                    <!-- Accordions -->
+                    <div class="accordion-container">
+                        <div class="accordion-item">
+                            <button class="accordion-header">Product Description <span class="icon">+</span></button>
+                            <div class="accordion-body">
+                                <p>Experience unparalleled comfort with our custom air-injected midsole. The dynamic responsiveness gives you energy back with every step, making it perfect for all-day urban wear.</p>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <button class="accordion-header">Materials <span class="icon">+</span></button>
+                            <div class="accordion-body">
+                                <ul class="specs-list">
+                                    <li>Premium breathable mesh & synthetic overlays</li>
+                                    <li>High-traction carbon rubber outsole</li>
+                                    <li>Recycled foam insole</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <button class="accordion-header">Shipping Info <span class="icon">+</span></button>
+                            <div class="accordion-body">
+                                <p>Free standard shipping on all orders over $150. Express shipping available at checkout. Free returns accepted within 30 days of purchase.</p>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -153,6 +266,65 @@
 
     <!-- Toast Notification -->
     <div id="toast" class="toast">Coming Soon!</div>
+
+    <!-- Sliding Cart Drawer -->
+    <div id="cart-overlay" class="cart-overlay"></div>
+    <div id="cart-drawer" class="cart-drawer">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button id="close-cart-btn" class="close-btn">&times;</button>
+        </div>
+        <div class="cart-items-container" id="cart-items-container">
+            <div class="empty-cart-msg">Your cart is empty.</div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Subtotal</span>
+                <span id="cart-total-price">$0.00</span>
+            </div>
+            <button id="checkout-btn" class="neon-btn checkout-btn">Proceed to Checkout</button>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="modal">
+        <div class="modal-content checkout-content">
+            <span class="close-btn checkout-close-btn">&times;</span>
+            <div class="checkout-layout">
+                <div class="checkout-form-section">
+                    <h3>Shipping Details</h3>
+                    <form class="checkout-form">
+                        <div class="form-row">
+                            <input type="text" placeholder="First Name" required>
+                            <input type="text" placeholder="Last Name" required>
+                        </div>
+                        <input type="text" placeholder="Address" required>
+                        <div class="form-row">
+                            <input type="text" placeholder="City" required>
+                            <input type="text" placeholder="Postal Code" required>
+                        </div>
+                    </form>
+                    
+                    <h3 class="payment-title">Payment Method</h3>
+                    <div class="payment-options">
+                        <button class="pay-btn apple-pay"><span class="icon"></span> Pay</button>
+                        <button class="pay-btn google-pay"><span class="icon">G</span> Pay</button>
+                    </div>
+                    
+                    <div class="divider"><span>OR</span></div>
+                    
+                    <form class="payment-form">
+                        <input type="text" placeholder="Card Number" required>
+                        <div class="form-row">
+                            <input type="text" placeholder="MM/YY" required>
+                            <input type="text" placeholder="CVC" required>
+                        </div>
+                        <button type="submit" class="neon-btn pay-submit-btn">Pay <span id="checkout-final-price">$0.00</span></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="script.js"></script>
 </body>
