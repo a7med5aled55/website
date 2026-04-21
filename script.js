@@ -386,6 +386,7 @@ loginTriggers.forEach(btn => {
     if(btn) {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
+            loginModal.classList.add('show');
             loginModal.style.display = 'flex';
         });
     }
@@ -395,6 +396,7 @@ ordersTriggers.forEach(btn => {
     if(btn) {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
+            ordersModal.classList.add('show');
             ordersModal.style.display = 'flex';
         });
     }
@@ -402,13 +404,15 @@ ordersTriggers.forEach(btn => {
 
 if(loginCloseBtn) {
     loginCloseBtn.addEventListener('click', () => {
-        loginModal.style.display = 'none';
+        loginModal.classList.remove('show');
+        setTimeout(() => loginModal.style.display = 'none', 300);
     });
 }
 
 if(ordersCloseBtn) {
     ordersCloseBtn.addEventListener('click', () => {
-        ordersModal.style.display = 'none';
+        ordersModal.classList.remove('show');
+        setTimeout(() => ordersModal.style.display = 'none', 300);
     });
 }
 
@@ -432,15 +436,94 @@ if(trackForm) {
     });
 }
 
+// Arabic Translations Dictionary
+const translations = {
+    "STEP INTO THE": "اخطُ نحو",
+    "FUTURE.": "المستقبل.",
+    "Minimalist design. Bold presence. Unmatched urban style.": "تصميم بسيط. حضور جريء. أسلوب حضري لا مثيل له.",
+    "Shop Now": "تسوق الآن",
+    "New Arrivals": "وصل حديثاً",
+    "Classic Shoes": "أحذية كلاسيكية",
+    "Sale": "تخفيضات",
+    "Contact": "اتصل بنا",
+    "Collections": "تشكيلات",
+    "KOTCHI Classic": "كوتشي كلاسيك",
+    "KOTCHI Classic: Timeless elegance with a rugged edge.": "أناقة خالدة بلمسة قوية.",
+    "The Signature Burgundy Oxford": "أكسفورد العنابي المميز",
+    "Our flagship rugged oxford crafted from premium seamless leather.": "حذاء أكسفورد الرائد لدينا مصنوع من الجلد الفاخر.",
+    "Shop Featured": "تسوق المميز",
+    "Quick View": "نظرة سريعة",
+    "All": "الكل",
+    "Help & Support": "المساعدة والدعم",
+    "Orders & Returns": "الطلبات والإرجاع",
+    "Sign In": "تسجيل الدخول",
+    "Track Order": "تتبع الطلب",
+    "Subscribe": "اشترك",
+    "Stay in the Loop": "ابق على اطلاع",
+    "Subscribe for exclusive drops and early access.": "اشترك للحصول على الإصدارات الحصرية والوصول المبكر.",
+    "Elevating urban footwear with minimalist design and uncompromising quality.": "نرتقي بالأحذية الحضرية بتصميم بسيط وجودة لا هوادة فيها.",
+    "Shop": "التسوق",
+    "Support": "الدعم",
+    "Best Sellers": "الأكثر مبيعاً",
+    "Release Dates": "تواريخ الإصدار",
+    "FAQ": "الأسئلة الشائعة",
+    "Shipping & Returns": "الشحن والإرجاع",
+    "Contact Us": "اتصل بنا"
+};
+
+const originalTexts = new Map();
+
 // Language Switcher Logic
 const langSwitchers = document.querySelectorAll('.lang-switcher');
 langSwitchers.forEach(btn => {
     btn.addEventListener('click', (e) => {
         e.preventDefault();
-        document.documentElement.classList.toggle('rtl-mode');
+        const isRTL = !document.documentElement.classList.contains('rtl-mode');
+        document.documentElement.classList.toggle('rtl-mode', isRTL);
         
-        // Toggle text logic for simulation
-        const isRTL = document.documentElement.classList.contains('rtl-mode');
+        // Toggle text logic
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+        let node;
+        while (node = walker.nextNode()) {
+            const text = node.nodeValue.trim();
+            if (text.length > 0) {
+                if (isRTL) {
+                    if (translations[text]) {
+                        if (!originalTexts.has(node)) originalTexts.set(node, text);
+                        node.nodeValue = node.nodeValue.replace(text, translations[text]);
+                    }
+                } else {
+                    if (originalTexts.has(node)) {
+                        node.nodeValue = node.nodeValue.replace(node.nodeValue.trim(), originalTexts.get(node));
+                    }
+                }
+            }
+        }
+        
+        // Translate placeholders
+        const inputs = document.querySelectorAll('input');
+        inputs.forEach(input => {
+            const placeholder = input.getAttribute('placeholder');
+            if (placeholder) {
+                if (isRTL) {
+                    // Quick add some placeholders
+                    const phTrans = {
+                        "Email Address": "البريد الإلكتروني",
+                        "Password": "كلمة المرور",
+                        "Enter your email": "أدخل بريدك الإلكتروني"
+                    };
+                    if (phTrans[placeholder]) {
+                        if (!originalTexts.has(input)) originalTexts.set(input, placeholder);
+                        input.setAttribute('placeholder', phTrans[placeholder]);
+                    }
+                } else {
+                    if (originalTexts.has(input)) {
+                        input.setAttribute('placeholder', originalTexts.get(input));
+                    }
+                }
+            }
+        });
+        
         if (isRTL) {
             showToast("تم تغيير اللغة إلى العربية");
         } else {

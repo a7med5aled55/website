@@ -1603,7 +1603,7 @@ img {
     max-height: 100vh !important;
     padding: calc(80px + 2vh) 5% 2vh 5% !important; /* Top padding accommodates top bar + glass header */
     box-sizing: border-box;
-    overflow: hidden !important;
+    overflow: visible !important;
 }
 
 .hero-content {
