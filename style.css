@@ -1673,3 +1673,28 @@ img {
     }
 }
 
+/* RTL / Arabic Language Support */
+html.rtl-mode {
+    direction: rtl;
+    font-family: 'Tajawal', sans-serif;
+}
+
+html.rtl-mode body {
+    text-align: right;
+}
+
+html.rtl-mode .logo {
+    direction: ltr; /* Ensure KOTCHI brand name remains LTR */
+    display: inline-flex;
+}
+
+html.rtl-mode .hero-content {
+    align-items: flex-start;
+}
+
+@media (max-width: 968px) {
+    html.rtl-mode .hero-content {
+        align-items: center;
+    }
+}
+

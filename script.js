@@ -431,3 +431,20 @@ if(trackForm) {
         ordersModal.style.display = 'none';
     });
 }
+
+// Language Switcher Logic
+const langSwitchers = document.querySelectorAll('.lang-switcher');
+langSwitchers.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.documentElement.classList.toggle('rtl-mode');
+        
+        // Toggle text logic for simulation
+        const isRTL = document.documentElement.classList.contains('rtl-mode');
+        if (isRTL) {
+            showToast("تم تغيير اللغة إلى العربية");
+        } else {
+            showToast("Language changed to English");
+        }
+    });
+});
