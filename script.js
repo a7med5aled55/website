@@ -369,3 +369,65 @@ if(menuToggle && navMenu) {
         });
     });
 }
+
+// User Services Modals
+const loginModal = document.getElementById('login-modal');
+const ordersModal = document.getElementById('orders-modal');
+
+// Trigger Buttons
+const loginTriggers = [document.getElementById('login-link'), document.getElementById('login-icon-link')];
+const ordersTriggers = [document.getElementById('orders-link'), document.getElementById('mobile-orders-link')];
+
+// Close Buttons
+const loginCloseBtn = document.querySelector('.login-close-btn');
+const ordersCloseBtn = document.querySelector('.orders-close-btn');
+
+loginTriggers.forEach(btn => {
+    if(btn) {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginModal.style.display = 'flex';
+        });
+    }
+});
+
+ordersTriggers.forEach(btn => {
+    if(btn) {
+        btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            ordersModal.style.display = 'flex';
+        });
+    }
+});
+
+if(loginCloseBtn) {
+    loginCloseBtn.addEventListener('click', () => {
+        loginModal.style.display = 'none';
+    });
+}
+
+if(ordersCloseBtn) {
+    ordersCloseBtn.addEventListener('click', () => {
+        ordersModal.style.display = 'none';
+    });
+}
+
+// Handle Form Submissions (Simulated)
+const authForm = document.getElementById('auth-form');
+const trackForm = document.getElementById('track-order-form');
+
+if(authForm) {
+    authForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        showToast("Logged in successfully!");
+        loginModal.style.display = 'none';
+    });
+}
+
+if(trackForm) {
+    trackForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        showToast("Order Found: Preparing for shipment.");
+        ordersModal.style.display = 'none';
+    });
+}

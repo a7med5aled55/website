@@ -1469,3 +1469,130 @@ img {
     }
 }
 
+/* Top Bar Styles */
+.top-bar {
+    background: #000000;
+    border-bottom: 1px solid var(--glass-border);
+    padding: 0.5rem 5%;
+    font-size: 0.8rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1001;
+}
+
+.top-bar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.top-bar-left, .top-bar-right {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.top-link {
+    color: var(--text-color);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    opacity: 0.7;
+    transition: opacity 0.3s;
+}
+
+.top-link:hover {
+    opacity: 1;
+}
+
+/* Adjust Header for Top Bar */
+.glass-header {
+    top: 34px; /* Height of top bar */
+}
+
+/* Header Icons Group */
+.header-icons {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.icon-link {
+    color: var(--text-color);
+    transition: color 0.3s;
+    display: flex;
+    align-items: center;
+}
+
+.icon-link:hover {
+    color: var(--accent-color);
+}
+
+.mobile-only {
+    display: none;
+}
+
+/* Auth & Tracking Modal Styles */
+.auth-layout {
+    padding: 2rem;
+    text-align: center;
+}
+
+.auth-layout h3 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.auth-layout p {
+    opacity: 0.7;
+    margin-bottom: 2rem;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.auth-submit-btn {
+    margin-top: 1rem;
+}
+
+.auth-links {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+}
+
+.auth-links a {
+    color: var(--text-color);
+    opacity: 0.7;
+    text-decoration: none;
+}
+
+.auth-links a:hover {
+    opacity: 1;
+}
+
+@media (max-width: 968px) {
+    .top-bar {
+        display: none;
+    }
+    .glass-header {
+        top: 0;
+    }
+    .mobile-only {
+        display: block;
+        margin-top: 1rem;
+    }
+    .mobile-only a {
+        font-size: 1.2rem !important;
+        opacity: 0.8;
+    }
+}
+
