@@ -489,7 +489,9 @@ const translations = {
     "Release Dates": "تواريخ الإصدار",
     "FAQ": "الأسئلة الشائعة",
     "Shipping & Returns": "الشحن والإرجاع",
-    "Contact Us": "اتصل بنا"
+    "Contact Us": "اتصل بنا",
+    "Select Size (EU):": "اختر المقاس (EU):",
+    "Select Size (EU)": "اختر المقاس (EU)"
 };
 
 const originalTexts = new Map();
