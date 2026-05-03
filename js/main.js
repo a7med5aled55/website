@@ -411,6 +411,32 @@ if(ordersCloseBtn) {
     });
 }
 
+// Support Modal
+const supportModal = document.getElementById('support-modal');
+const supportCloseBtn = document.querySelector('.support-close-btn');
+
+// Help & Support link — try WhatsApp first, fallback to modal
+const helpLink = document.getElementById('help-link');
+if (helpLink) {
+    // WhatsApp href is already on the anchor; only intercept if you want a modal fallback
+    // (Currently direct WhatsApp — no JS needed unless overriding)
+}
+
+// Support modal close
+if (supportCloseBtn && supportModal) {
+    supportCloseBtn.addEventListener('click', () => {
+        supportModal.classList.remove('show');
+        setTimeout(() => supportModal.style.display = 'none', 300);
+    });
+    // Close on backdrop click
+    window.addEventListener('click', (e) => {
+        if (e.target === supportModal) {
+            supportModal.classList.remove('show');
+            setTimeout(() => supportModal.style.display = 'none', 300);
+        }
+    });
+}
+
 // Handle Form Submissions (Simulated)
 const authForm = document.getElementById('auth-form');
 const trackForm = document.getElementById('track-order-form');
@@ -531,6 +557,17 @@ function switchLanguage(targetLang) {
         if (countryLinkMobile) countryLinkMobile.textContent = "Egypt / EN";
         showToast("Language changed to English");
     }
+
+    // Refresh product prices for the new language
+    if (typeof refreshProductPrices === 'function') refreshProductPrices();
+
+    // Update support modal text
+    const supportTitle = document.getElementById('support-modal-title');
+    const supportSubtitle = document.getElementById('support-modal-subtitle');
+    if (supportTitle) supportTitle.textContent = isRTL ? 'تحتاج مساعدة؟' : 'Need Help?';
+    if (supportSubtitle) supportSubtitle.textContent = isRTL
+        ? 'فريقنا جاهز لمساعدتك. تواصل معنا مباشرةً:'
+        : 'Our team is ready to assist you. Reach us directly:';
 }
 
 document.querySelectorAll('.lang-btn-ar').forEach(btn => {
