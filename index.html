@@ -53,13 +53,25 @@
             <span class="logo-icon">K</span> KOTCHI
         </a>
         <div class="header-icons">
-            <a href="#" class="icon-link" id="login-icon-link">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                    <circle cx="12" cy="7" r="4" />
-                </svg>
-            </a>
+            <!-- User / Profile -->
+            <div class="profile-wrapper" id="profile-wrapper">
+                <a href="#" class="icon-link" id="login-icon-link" aria-label="Account">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+                        <circle cx="12" cy="7" r="4" />
+                    </svg>
+                </a>
+                <!-- Profile Dropdown (shown when logged in) -->
+                <div class="profile-dropdown" id="profile-dropdown">
+                    <div class="profile-avatar" id="profile-avatar">A</div>
+                    <ul>
+                        <li><a href="#" class="empty-link">&#128100; My Profile</a></li>
+                        <li><a href="#" id="profile-orders-link" class="empty-link">&#128230; My Orders</a></li>
+                        <li><a href="#" id="logout-btn">&#128274; Logout</a></li>
+                    </ul>
+                </div>
+            </div>
             <div class="cart-icon-wrapper" id="cart-nav-icon">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
@@ -369,20 +381,33 @@
 
     <!-- Login Modal -->
     <div id="login-modal" class="modal">
-        <div class="modal-content login-content" style="max-width: 400px;">
+        <div class="modal-content login-content" style="max-width: 420px;">
             <span class="close-btn login-close-btn">&times;</span>
             <div class="auth-layout">
-                <h3>Sign In</h3>
-                <p>Welcome back to KOTCHI.</p>
-                <form class="auth-form" id="auth-form">
-                    <input type="email" placeholder="Email Address" required>
-                    <input type="password" placeholder="Password" required>
-                    <button type="submit" class="neon-btn auth-submit-btn">Login</button>
-                </form>
-                <div class="auth-links">
-                    <a href="#" class="empty-link">Forgot Password?</a>
-                    <a href="#" class="empty-link">Create an Account</a>
+                <!-- Tab switcher -->
+                <div class="auth-tabs">
+                    <button class="auth-tab active" id="tab-login">Sign In</button>
+                    <button class="auth-tab" id="tab-register">Register</button>
                 </div>
+
+                <!-- Login Form -->
+                <form class="auth-form" id="auth-form">
+                    <input type="email" id="login-email" placeholder="Email Address" required>
+                    <input type="password" id="login-password" placeholder="Password" required>
+                    <button type="submit" class="neon-btn auth-submit-btn">Login</button>
+                    <div class="auth-links">
+                        <a href="#" class="empty-link">Forgot Password?</a>
+                    </div>
+                </form>
+
+                <!-- Register Form (hidden by default) -->
+                <form class="auth-form" id="register-form" style="display:none;">
+                    <input type="text"  id="reg-name"  placeholder="Full Name" required>
+                    <input type="tel"   id="reg-phone" placeholder="Phone Number (e.g. 01012345678)" required>
+                    <input type="email" id="reg-email" placeholder="Email Address" required>
+                    <input type="password" id="reg-pass" placeholder="Password" required>
+                    <button type="submit" class="neon-btn auth-submit-btn">Create Account</button>
+                </form>
             </div>
         </div>
     </div>

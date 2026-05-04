@@ -1,5 +1,5 @@
-// script.js
-// Scroll Reveal Animation
+// Script.js — KOTCHI Core Interactions
+// ─── Scroll Reveal ───────────────────────────────────────────────────────────
 const revealElements = document.querySelectorAll('.reveal');
 const revealObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
@@ -9,227 +9,187 @@ const revealObserver = new IntersectionObserver((entries, observer) => {
         }
     });
 }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-
 revealElements.forEach(el => revealObserver.observe(el));
 
-// Product Filtering (uses event delegation for dynamic cards)
-const filterBtns = document.querySelectorAll('.filter-btn');
-
-function getProductCards() {
-    return document.querySelectorAll('.product-card');
+// ─── Toast ───────────────────────────────────────────────────────────────────
+const toast = document.getElementById('toast');
+function showToast(message) {
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
 }
+
+// ─── Product Filter ───────────────────────────────────────────────────────────
+const filterBtns = document.querySelectorAll('.filter-btn');
+function getProductCards() { return document.querySelectorAll('.product-card'); }
 
 filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
         filterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         const filterValue = btn.getAttribute('data-filter');
-        const cards = getProductCards();
-        cards.forEach(card => {
+        getProductCards().forEach(card => {
             const cardBrand = card.getAttribute('data-brand');
             const isSale = card.getAttribute('data-sale') === 'true';
-            if (filterValue === 'all' || filterValue === cardBrand || (filterValue === 'sale' && isSale)) {
-                card.style.display = 'block';
-                card.animate([{ opacity: 0, transform: 'scale(0.95)' }, { opacity: 1, transform: 'scale(1)' }], { duration: 400, easing: 'ease-out' });
-            } else {
-                card.style.display = 'none';
-            }
+            const show = filterValue === 'all' || filterValue === cardBrand || (filterValue === 'sale' && isSale);
+            card.style.display = show ? 'block' : 'none';
+            if (show) card.animate([{ opacity: 0, transform: 'scale(0.95)' }, { opacity: 1, transform: 'scale(1)' }], { duration: 400, easing: 'ease-out' });
         });
     });
 });
 
-// Classic Shop Features Button
+// Classic section CTA
 const shopClassicBtn = document.getElementById('shop-classic-btn');
-if (shopClassicBtn) {
-    shopClassicBtn.addEventListener('click', function() {
-        const targetBtn = document.querySelector('.filter-btn[data-filter="classic"]');
-        if(targetBtn) targetBtn.click();
-    });
-}
-
-const toast = document.getElementById('toast');
-function showToast(message) {
-    toast.textContent = message;
-    toast.classList.add("show");
-    setTimeout(() => toast.classList.remove("show"), 3000);
-}
-
-// Modal Interactivity
-const modal = document.getElementById('product-modal');
-const closeBtn = document.querySelector('.close-btn');
-const quickViewBtns = document.querySelectorAll('.quick-view-btn');
-
-quickViewBtns.forEach(btn => {
-    btn.addEventListener('click', function(event) {
-        event.stopPropagation();
-        const card = this.closest('.product-card');
-        document.getElementById('modal-img').src = card.querySelector('img').src;
-        document.getElementById('modal-title').textContent = card.querySelector('h3').textContent;
-        document.getElementById('modal-brand').textContent = card.querySelector('.brand').textContent;
-        document.getElementById('modal-price').textContent = card.querySelector('.price').textContent;
-        modal.style.display = "flex";
-        setTimeout(() => modal.classList.add('show'), 10);
-    });
+if (shopClassicBtn) shopClassicBtn.addEventListener('click', () => {
+    document.querySelector('.filter-btn[data-filter="classic"]')?.click();
 });
 
-closeBtn.addEventListener('click', () => { modal.classList.remove('show'); setTimeout(() => modal.style.display = "none", 300); });
-window.addEventListener('click', e => { if (e.target == modal) closeBtn.click(); });
+// ─── Quick View Modal (event delegation for dynamic cards) ────────────────────
+const modal       = document.getElementById('product-modal');
+const closeBtn    = document.querySelector('.close-btn');
 
-// PDP Navigation Simulation
+function openQuickView(card) {
+    const img   = card.querySelector('.card-main-img') || card.querySelector('img');
+    const title = card.querySelector('h3')?.textContent || '';
+    const brand = card.querySelector('.brand')?.textContent || '';
+    const price = card.querySelector('.price')?.textContent || '';
+    document.getElementById('modal-img').src           = img?.src || '';
+    document.getElementById('modal-title').textContent = title;
+    document.getElementById('modal-brand').textContent = brand;
+    document.getElementById('modal-price').textContent = price;
+    modal.style.display = 'flex';
+    setTimeout(() => modal.classList.add('show'), 10);
+}
+
+document.getElementById('product-grid-container')?.addEventListener('click', e => {
+    const qvBtn = e.target.closest('.quick-view-btn');
+    if (qvBtn) { e.stopPropagation(); openQuickView(qvBtn.closest('.product-card')); }
+});
+
+if (closeBtn) {
+    closeBtn.addEventListener('click', () => { modal.classList.remove('show'); setTimeout(() => modal.style.display = 'none', 300); });
+}
+window.addEventListener('click', e => { if (e.target === modal) closeBtn?.click(); });
+
+// ─── PDP (event delegation) ───────────────────────────────────────────────────
 const fullDetailsSection = document.getElementById('full-details-section');
-const fullInfoTitle = document.getElementById('full-info-title');
-const fullInfoImg = document.getElementById('full-info-img');
-const fullInfoPrice = document.getElementById('full-info-price');
+const fullInfoTitle      = document.getElementById('full-info-title');
+const fullInfoImg        = document.getElementById('full-info-img');
+const fullInfoPrice      = document.getElementById('full-info-price');
 
-getProductCards().forEach(card => {
-    const overlay = document.createElement('div');
-    overlay.className = 'view-details-overlay';
-    overlay.innerHTML = '<span>View Details</span>';
-    card.insertBefore(overlay, card.firstChild);
-
-    card.addEventListener('click', function() {
-        showToast("Loading Product Details...");
-        fullInfoTitle.textContent = this.querySelector('h3').textContent + " - Overview";
-        fullInfoImg.src = this.querySelector('img').src;
-        if(fullInfoPrice) fullInfoPrice.textContent = this.querySelector('.price').textContent;
-        
-        document.querySelectorAll('.gallery-thumbnails .thumb').forEach(t => t.classList.remove('active'));
-        const firstThumb = document.querySelector('.gallery-thumbnails .thumb');
-        if(firstThumb) {
-            firstThumb.classList.add('active');
-            firstThumb.src = this.querySelector('img').src;
-        }
-
+document.getElementById('product-grid-container')?.addEventListener('click', e => {
+    const card = e.target.closest('.product-card');
+    if (!card || e.target.closest('.quick-view-btn') || e.target.closest('.card-swatch') || e.target.closest('.card-size-btn')) return;
+    const img   = card.querySelector('.card-main-img') || card.querySelector('img');
+    const title = card.querySelector('h3')?.textContent || 'Product';
+    const price = card.querySelector('.price')?.textContent || '';
+    showToast('Loading Product Details...');
+    if (fullInfoTitle) fullInfoTitle.textContent = title + ' — Overview';
+    if (fullInfoImg)   fullInfoImg.src = img?.src || '';
+    if (fullInfoPrice) fullInfoPrice.textContent = price;
+    const firstThumb = document.querySelector('.gallery-thumbnails .thumb');
+    if (firstThumb) { firstThumb.src = img?.src || ''; firstThumb.classList.add('active'); }
+    if (fullDetailsSection) {
         fullDetailsSection.style.display = 'block';
-        revealObserver.observe(fullDetailsSection.querySelector('.reveal'));
+        const rev = fullDetailsSection.querySelector('.reveal');
+        if (rev) revealObserver.observe(rev);
         setTimeout(() => fullDetailsSection.scrollIntoView({ behavior: 'smooth' }), 100);
-    });
+    }
 });
 
-// Generic Size/Color Selection
-document.querySelectorAll('.size-btn, .color-swatch').forEach(btn => {
-    btn.addEventListener('click', function(e) {
+// ─── Size / Color selection (static PDP & modal) ──────────────────────────────
+document.addEventListener('click', e => {
+    const btn = e.target.closest('.size-btn, .color-swatch');
+    if (btn) {
         e.stopPropagation();
-        const siblings = this.parentElement.children;
-        Array.from(siblings).forEach(s => s.classList.remove('active'));
-        this.classList.add('active');
-    });
+        Array.from(btn.parentElement.children).forEach(s => s.classList.remove('active'));
+        btn.classList.add('active');
+    }
 });
 
-// Gallery Slider
-const thumbs = document.querySelectorAll('.gallery-thumbnails .thumb');
+// ─── Gallery Slider ───────────────────────────────────────────────────────────
+const thumbs  = document.querySelectorAll('.gallery-thumbnails .thumb');
 const mainImg = document.getElementById('full-info-img');
 thumbs.forEach(thumb => {
     thumb.addEventListener('click', function() {
         thumbs.forEach(t => t.classList.remove('active'));
         this.classList.add('active');
-        mainImg.style.opacity = 0;
-        setTimeout(() => {
-            mainImg.src = this.src;
-            mainImg.style.opacity = 1;
-        }, 150);
+        if (mainImg) { mainImg.style.opacity = 0; setTimeout(() => { mainImg.src = this.src; mainImg.style.opacity = 1; }, 150); }
     });
 });
 
-// Accordions
-const accordions = document.querySelectorAll('.accordion-item');
-accordions.forEach(acc => {
-    acc.querySelector('.accordion-header').addEventListener('click', function() {
-        acc.classList.toggle('active');
-    });
+// ─── Accordions ───────────────────────────────────────────────────────────────
+document.querySelectorAll('.accordion-item').forEach(acc => {
+    acc.querySelector('.accordion-header')?.addEventListener('click', () => acc.classList.toggle('active'));
 });
 
-// ----------------------------------------------------
-// Cart Logic
-// ----------------------------------------------------
+// ─── Cart Logic (EGP) ────────────────────────────────────────────────────────
 let cartState = [];
 
-const addToCartBtns = document.querySelectorAll('.pdp-add-to-cart, .add-to-cart-btn');
-const cartNavIcon = document.getElementById('cart-nav-icon');
-const cartBadge = document.getElementById('cart-badge');
-const cartDrawer = document.getElementById('cart-drawer');
-const cartOverlay = document.getElementById('cart-overlay');
-const closeCartBtn = document.getElementById('close-cart-btn');
-const cartItemsContainer = document.getElementById('cart-items-container');
-const cartTotalPrice = document.getElementById('cart-total-price');
-const checkoutFinalPrice = document.getElementById('checkout-final-price');
+const cartNavIcon          = document.getElementById('cart-nav-icon');
+const cartBadge            = document.getElementById('cart-badge');
+const cartDrawer           = document.getElementById('cart-drawer');
+const cartOverlay          = document.getElementById('cart-overlay');
+const closeCartBtn         = document.getElementById('close-cart-btn');
+const cartItemsContainer   = document.getElementById('cart-items-container');
+const cartTotalPrice       = document.getElementById('cart-total-price');
+const checkoutFinalPrice   = document.getElementById('checkout-final-price');
 
-// Toggle Cart
 cartNavIcon.addEventListener('click', openCart);
 closeCartBtn.addEventListener('click', closeCart);
 cartOverlay.addEventListener('click', closeCart);
 
-function openCart(e) {
-    if(e) e.preventDefault();
-    cartOverlay.classList.add('show');
-    cartDrawer.classList.add('open');
+function openCart(e)  { if(e) e.preventDefault(); cartOverlay.classList.add('show'); cartDrawer.classList.add('open'); }
+function closeCart()  { cartOverlay.classList.remove('show'); cartDrawer.classList.remove('open'); }
+
+function parseEGP(str) {
+    // Extracts numeric value from strings like "1,490 EGP" or "١٬٤٩٠ ج.م"
+    if (!str) return 0;
+    const cleaned = str.replace(/[^\d.]/g, '').replace(/,/g, '');
+    return parseFloat(cleaned) || 0;
 }
 
-function closeCart() {
-    cartOverlay.classList.remove('show');
-    cartDrawer.classList.remove('open');
+function formatEGP(num) {
+    return num.toLocaleString('en-EG') + ' EGP';
 }
 
-addToCartBtns.forEach(btn => {
-    btn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        
-        let itemTitle = "Premium Sneaker";
-        let itemPrice = 250;
-        let imgSrc = "hero_sneaker.png";
-        
-        if(this.classList.contains('pdp-add-to-cart')) {
-            itemTitle = document.getElementById('full-info-title').textContent.replace(" - Overview", "");
-            itemPrice = parseInt(document.getElementById('full-info-price').textContent.replace('$', ''));
-            imgSrc = document.getElementById('full-info-img').src;
-        } else if(this.classList.contains('add-to-cart-btn')) {
-            itemTitle = document.getElementById('modal-title').textContent;
-            itemPrice = parseInt(document.getElementById('modal-price').textContent.replace('$', ''));
-            imgSrc = document.getElementById('modal-img').src;
-        }
-        
-        const existingItem = cartState.find(item => item.title === itemTitle);
-        if(existingItem) {
-            existingItem.qty += 1;
-        } else {
-            cartState.push({ title: itemTitle, price: itemPrice, imgSrc: imgSrc, qty: 1 });
-        }
-        
-        updateCartUI();
+function addToCart(title, priceNum, imgSrc) {
+    const existing = cartState.find(item => item.title === title);
+    if (existing) { existing.qty += 1; }
+    else { cartState.push({ title, price: priceNum, imgSrc, qty: 1 }); }
+    updateCartUI();
 
-        const flyingItem = document.createElement('div');
-        flyingItem.classList.add('flying-item');
-        
-        const rect = this.getBoundingClientRect();
-        flyingItem.style.left = rect.left + (rect.width / 2) - 12 + 'px';
-        flyingItem.style.top = rect.top + (rect.height / 2) - 12 + 'px';
-        
-        document.body.appendChild(flyingItem);
-        flyingItem.offsetHeight; 
-        
-        const cartRect = cartNavIcon.getBoundingClientRect();
-        flyingItem.style.left = cartRect.left + (cartRect.width / 2) - 12 + 'px';
-        flyingItem.style.top = cartRect.top + (cartRect.height / 2) - 12 + 'px';
-        flyingItem.style.transform = 'scale(0.1)';
-        flyingItem.style.opacity = '0';
-        
-        setTimeout(() => {
-            flyingItem.remove();
-            cartNavIcon.style.transform = 'scale(1.3)';
-            cartNavIcon.style.color = 'var(--accent-color)';
-            setTimeout(() => {
-                cartNavIcon.style.transform = 'scale(1)';
-                cartNavIcon.style.color = 'inherit';
-                openCart();
-            }, 300);
-        }, 800);
-    });
+    // Fly-to-cart animation
+    const cartRect = cartNavIcon.getBoundingClientRect();
+    const fly = document.createElement('div');
+    fly.className = 'flying-item';
+    fly.style.cssText = `left:${cartRect.left + cartRect.width/2 - 12}px;top:${cartRect.top - 10}px;`;
+    document.body.appendChild(fly);
+    setTimeout(() => { fly.style.transform = 'scale(0)'; fly.style.opacity = '0'; }, 50);
+    setTimeout(() => { fly.remove(); cartNavIcon.style.transform = 'scale(1.3)'; setTimeout(() => { cartNavIcon.style.transform = ''; openCart(); }, 250); }, 700);
+}
+
+// Add-to-cart — PDP button
+document.getElementById('pdp-add-to-cart')?.addEventListener('click', e => {
+    e.stopPropagation();
+    const title    = document.getElementById('full-info-title')?.textContent.replace(' — Overview','').replace(' - Overview','') || 'Product';
+    const priceStr = document.getElementById('full-info-price')?.textContent || '0';
+    const imgSrc   = document.getElementById('full-info-img')?.src || '';
+    addToCart(title, parseEGP(priceStr), imgSrc);
+});
+
+// Add-to-cart — Quick View modal
+document.querySelector('.add-to-cart-btn')?.addEventListener('click', e => {
+    e.stopPropagation();
+    const title    = document.getElementById('modal-title')?.textContent || 'Product';
+    const priceStr = document.getElementById('modal-price')?.textContent || '0';
+    const imgSrc   = document.getElementById('modal-img')?.src || '';
+    addToCart(title, parseEGP(priceStr), imgSrc);
 });
 
 function updateCartUI() {
     cartItemsContainer.innerHTML = '';
-    let total = 0;
-    let count = 0;
+    let total = 0, count = 0;
 
     if (cartState.length === 0) {
         cartItemsContainer.innerHTML = '<div class="empty-cart-msg">Your cart is empty.</div>';
@@ -237,36 +197,36 @@ function updateCartUI() {
         cartState.forEach((item, index) => {
             total += item.price * item.qty;
             count += item.qty;
-            
+            const lineTotal = item.price * item.qty;
             const itemEl = document.createElement('div');
             itemEl.className = 'cart-item';
             itemEl.innerHTML = `
                 <img src="${item.imgSrc}" alt="${item.title}" class="cart-item-img">
                 <div class="cart-item-info">
                     <div class="cart-item-title">${item.title}</div>
-                    <div class="cart-item-price">$${item.price}</div>
+                    <div class="cart-item-price">${formatEGP(item.price)}</div>
                     <div class="cart-item-qty">
-                        <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                        <button class="qty-btn" onclick="changeQty(${index},-1)">-</button>
                         <span>${item.qty}</span>
-                        <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                        <button class="qty-btn" onclick="changeQty(${index},1)">+</button>
                     </div>
+                    <div style="font-size:0.8rem;opacity:0.6;margin-top:4px;">Line total: ${formatEGP(lineTotal)}</div>
                 </div>
             `;
             cartItemsContainer.appendChild(itemEl);
         });
     }
 
-    cartBadge.textContent = count;
-    cartTotalPrice.textContent = '$' + total.toFixed(2);
-    if(checkoutFinalPrice) checkoutFinalPrice.textContent = '$' + total.toFixed(2);
+    cartBadge.textContent  = count;
+    const totalStr = formatEGP(total);
+    if (cartTotalPrice)    cartTotalPrice.textContent    = totalStr;
+    if (checkoutFinalPrice) checkoutFinalPrice.textContent = totalStr;
 }
 
 window.changeQty = function(index, delta) {
     if (cartState[index]) {
         cartState[index].qty += delta;
-        if (cartState[index].qty <= 0) {
-            cartState.splice(index, 1);
-        }
+        if (cartState[index].qty <= 0) cartState.splice(index, 1);
         updateCartUI();
     }
 };
@@ -437,25 +397,92 @@ if (supportCloseBtn && supportModal) {
     });
 }
 
-// Handle Form Submissions (Simulated)
-const authForm = document.getElementById('auth-form');
-const trackForm = document.getElementById('track-order-form');
+// ─── Auth State Management ─────────────────────────────────────────────────
+let currentUser = null;
 
-if(authForm) {
-    authForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        showToast("Logged in successfully!");
-        loginModal.style.display = 'none';
-    });
+const loginIconLink  = document.getElementById('login-icon-link');
+const profileDropdown = document.getElementById('profile-dropdown');
+const profileAvatar   = document.getElementById('profile-avatar');
+const profileWrapper  = document.getElementById('profile-wrapper');
+const logoutBtn       = document.getElementById('logout-btn');
+const tabLogin        = document.getElementById('tab-login');
+const tabRegister     = document.getElementById('tab-register');
+const authForm        = document.getElementById('auth-form');
+const registerForm    = document.getElementById('register-form');
+const trackForm       = document.getElementById('track-order-form');
+
+function setLoggedIn(name) {
+    currentUser = name;
+    const initial = name.charAt(0).toUpperCase();
+    // Swap icon → avatar
+    if (loginIconLink) loginIconLink.style.display = 'none';
+    if (profileAvatar) { profileAvatar.textContent = initial; profileAvatar.style.display = 'flex'; }
+    profileWrapper?.classList.add('logged-in');
 }
 
-if(trackForm) {
-    trackForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        showToast("Order Found: Preparing for shipment.");
-        ordersModal.style.display = 'none';
-    });
+function setLoggedOut() {
+    currentUser = null;
+    if (loginIconLink) loginIconLink.style.display = '';
+    if (profileAvatar) profileAvatar.style.display = 'none';
+    profileWrapper?.classList.remove('logged-in');
+    if (profileDropdown) profileDropdown.classList.remove('open');
 }
+
+// Toggle dropdown on avatar click
+profileAvatar?.addEventListener('click', (e) => {
+    e.preventDefault(); e.stopPropagation();
+    profileDropdown?.classList.toggle('open');
+});
+document.addEventListener('click', e => {
+    if (!profileWrapper?.contains(e.target)) profileDropdown?.classList.remove('open');
+});
+
+// Logout
+logoutBtn?.addEventListener('click', (e) => {
+    e.preventDefault();
+    setLoggedOut();
+    showToast('You have been logged out.');
+});
+
+// Tab switcher
+tabLogin?.addEventListener('click', () => {
+    tabLogin.classList.add('active'); tabRegister?.classList.remove('active');
+    if (authForm)     authForm.style.display = '';
+    if (registerForm) registerForm.style.display = 'none';
+});
+tabRegister?.addEventListener('click', () => {
+    tabRegister.classList.add('active'); tabLogin?.classList.remove('active');
+    if (authForm)     authForm.style.display = 'none';
+    if (registerForm) registerForm.style.display = '';
+});
+
+// Login submit
+authForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('login-email')?.value || 'User';
+    const name  = email.split('@')[0];
+    setLoggedIn(name);
+    loginModal.classList.remove('show');
+    setTimeout(() => loginModal.style.display = 'none', 300);
+    showToast(`Welcome back, ${name}! 👋`);
+});
+
+// Register submit
+registerForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('reg-name')?.value || 'User';
+    setLoggedIn(name);
+    loginModal.classList.remove('show');
+    setTimeout(() => loginModal.style.display = 'none', 300);
+    showToast(`Account created! Welcome, ${name}! 🎉`);
+});
+
+// Track order form
+trackForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    showToast('Order Found: Preparing for shipment.');
+    ordersModal.style.display = 'none';
+});
 
 // Arabic Translations Dictionary
 const translations = {
