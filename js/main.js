@@ -19,22 +19,37 @@ function showToast(message) {
     setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
-// ─── Product Filter ───────────────────────────────────────────────────────────
+// ─── Product Filter — operates on category rows ─────────────────────────────
 const filterBtns = document.querySelectorAll('.filter-btn');
-function getProductCards() { return document.querySelectorAll('.product-card'); }
+
+function getCategoryRows() { return document.querySelectorAll('.category-row'); }
 
 filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
         filterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         const filterValue = btn.getAttribute('data-filter');
-        getProductCards().forEach(card => {
-            const cardBrand = card.getAttribute('data-brand');
-            const isSale = card.getAttribute('data-sale') === 'true';
-            const show = filterValue === 'all' || filterValue === cardBrand || (filterValue === 'sale' && isSale);
-            card.style.display = show ? 'block' : 'none';
-            if (show) card.animate([{ opacity: 0, transform: 'scale(0.95)' }, { opacity: 1, transform: 'scale(1)' }], { duration: 400, easing: 'ease-out' });
+        getCategoryRows().forEach(row => {
+            const rowCat = row.getAttribute('data-cat');
+            // For 'sale' filter: show all rows but dim non-sale cards inside
+            if (filterValue === 'all') {
+                row.style.display = '';
+                row.querySelectorAll('.slider-card').forEach(c => { c.style.opacity = '1'; c.style.pointerEvents = ''; });
+            } else if (filterValue === 'sale') {
+                row.style.display = '';
+                row.querySelectorAll('.slider-card').forEach(c => {
+                    const isSale = c.dataset.sale === 'true';
+                    c.style.opacity      = isSale ? '1' : '0.25';
+                    c.style.pointerEvents = isSale ? '' : 'none';
+                });
+            } else {
+                row.style.display = (rowCat === filterValue) ? '' : 'none';
+                row.querySelectorAll('.slider-card').forEach(c => { c.style.opacity = '1'; c.style.pointerEvents = ''; });
+            }
         });
+        // scroll into first visible row
+        const firstVisible = document.querySelector('.category-row:not([style*="none"])');
+        if (firstVisible) firstVisible.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 });
 
@@ -43,6 +58,56 @@ const shopClassicBtn = document.getElementById('shop-classic-btn');
 if (shopClassicBtn) shopClassicBtn.addEventListener('click', () => {
     document.querySelector('.filter-btn[data-filter="classic"]')?.click();
 });
+
+// ─── Carousel / Slider Init ───────────────────────────────────────────────────
+function initCarousels() {
+    document.querySelectorAll('.category-row').forEach(row => {
+        const track    = row.querySelector('.slider-track');
+        const viewport = row.querySelector('.slider-viewport');
+        const prevBtn  = row.querySelector('.arrow-prev');
+        const nextBtn  = row.querySelector('.arrow-next');
+        if (!track || !viewport || !prevBtn || !nextBtn) return;
+
+        let scrollPos = 0;
+
+        function getStep() {
+            const card = track.querySelector('.slider-card');
+            return card ? card.offsetWidth + 20 : 280;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            const step     = getStep();
+            const maxScroll = track.scrollWidth - viewport.clientWidth;
+            scrollPos = Math.min(scrollPos + step, maxScroll);
+            track.style.transform = `translateX(-${scrollPos}px)`;
+        });
+
+        prevBtn.addEventListener('click', () => {
+            const step = getStep();
+            scrollPos = Math.max(scrollPos - step, 0);
+            track.style.transform = `translateX(-${scrollPos}px)`;
+        });
+
+        // ── Touch / swipe support ─────────────────────────────────────────
+        let touchStartX = 0;
+        viewport.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
+        viewport.addEventListener('touchend', e => {
+            const delta = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(delta) < 30) return;   // ignore tiny taps
+            if (delta > 0) nextBtn.click();
+            else           prevBtn.click();
+        }, { passive: true });
+
+        // ── Recalculate on resize ─────────────────────────────────────────
+        window.addEventListener('resize', () => {
+            scrollPos = 0;
+            track.style.transform = 'translateX(0)';
+        });
+    });
+}
+
+// Carousels are wired AFTER products are rendered (called from products.js or a DOMContentLoaded)
+document.addEventListener('DOMContentLoaded', () => setTimeout(initCarousels, 50));
 
 // ─── Quick View Modal (event delegation for dynamic cards) ────────────────────
 const modal       = document.getElementById('product-modal');

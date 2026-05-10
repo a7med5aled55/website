@@ -98,25 +98,79 @@
             </div>
         </section>
 
-        <!-- Product Grid Section -->
-        <section id="collections" class="products-section">
+        <!-- ════════ COLLECTIONS ════════ -->
+        <section id="collections" class="collections-wrapper">
             <div class="section-header reveal">
                 <h2>Our <span class="highlight">Collections</span></h2>
                 <div class="filter-bar">
-                    <button class="filter-btn" data-filter="sneakers" data-highlight="new">New Arrivals</button>
                     <button class="filter-btn active" data-filter="all">All</button>
                     <button class="filter-btn" data-filter="sneakers">Sneakers</button>
-                    <button class="filter-btn" data-filter="casual">Casual Shoes</button>
-                    <button class="filter-btn" data-filter="sport">Sport Shoes</button>
+                    <button class="filter-btn" data-filter="casual">Casual</button>
+                    <button class="filter-btn" data-filter="sport">Sport</button>
                     <button class="filter-btn" data-filter="classic">Classic</button>
                     <button class="filter-btn filter-btn-sale" data-filter="sale">🔥 Sale</button>
                 </div>
             </div>
 
-            <div class="product-grid" id="product-grid-container">
-                <!-- Products dynamically rendered here -->
+            <!-- ── Sneakers ── -->
+            <div class="category-row reveal" id="cat-sneakers" data-cat="sneakers">
+                <div class="category-row-header">
+                    <h3 class="cat-title">👟 Sneakers</h3>
+                    <div class="slider-controls">
+                        <button class="slider-arrow arrow-prev" aria-label="Previous">&#8592;</button>
+                        <button class="slider-arrow arrow-next" aria-label="Next">&#8594;</button>
+                    </div>
+                </div>
+                <div class="slider-viewport">
+                    <div class="slider-track" id="track-sneakers"></div>
+                </div>
+            </div>
+
+            <!-- ── Casual ── -->
+            <div class="category-row reveal" id="cat-casual" data-cat="casual">
+                <div class="category-row-header">
+                    <h3 class="cat-title">👞 Casual Shoes</h3>
+                    <div class="slider-controls">
+                        <button class="slider-arrow arrow-prev" aria-label="Previous">&#8592;</button>
+                        <button class="slider-arrow arrow-next" aria-label="Next">&#8594;</button>
+                    </div>
+                </div>
+                <div class="slider-viewport">
+                    <div class="slider-track" id="track-casual"></div>
+                </div>
+            </div>
+
+            <!-- ── Sport ── -->
+            <div class="category-row reveal" id="cat-sport" data-cat="sport">
+                <div class="category-row-header">
+                    <h3 class="cat-title">⚡ Sport</h3>
+                    <div class="slider-controls">
+                        <button class="slider-arrow arrow-prev" aria-label="Previous">&#8592;</button>
+                        <button class="slider-arrow arrow-next" aria-label="Next">&#8594;</button>
+                    </div>
+                </div>
+                <div class="slider-viewport">
+                    <div class="slider-track" id="track-sport"></div>
+                </div>
+            </div>
+
+            <!-- ── Classic ── -->
+            <div class="category-row reveal" id="cat-classic" data-cat="classic">
+                <div class="category-row-header">
+                    <h3 class="cat-title">🏆 Classic Heritage</h3>
+                    <div class="slider-controls">
+                        <button class="slider-arrow arrow-prev" aria-label="Previous">&#8592;</button>
+                        <button class="slider-arrow arrow-next" aria-label="Next">&#8594;</button>
+                    </div>
+                </div>
+                <div class="slider-viewport">
+                    <div class="slider-track" id="track-classic"></div>
+                </div>
             </div>
         </section>
+
+        <!-- Hidden container kept for legacy JS compatibility -->
+        <div id="product-grid-container" style="display:none;"></div>
 
         <!-- Classic Shoes Section -->
         <section id="classic" class="products-section classic-section">
